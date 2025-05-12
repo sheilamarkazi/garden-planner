@@ -1,4 +1,4 @@
-from garden_planner.crew import create_crew
+from .crew import create_crew
 
 def run_crew(plants_text: str, beds_text: str):
     """
