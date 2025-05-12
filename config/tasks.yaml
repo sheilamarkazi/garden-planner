@@ -1,4 +1,3 @@
-TASKS_YAML = textwrap.dedent("""\
 ingest_plant_list:
   description: >
     Parse the user's plant names and quantities, then fetch full botanical
@@ -48,4 +47,3 @@ render_diagram:
     plant. Save to output/garden_plan.png.
   agent: visualizer
   output_file: output/garden_plan.png
-""")
