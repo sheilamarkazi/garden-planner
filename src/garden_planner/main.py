@@ -80,10 +80,9 @@ def run_crew(plants_text: str, beds_text: str):
     beds = parse_beds(beds_text)
 
     crew = create_crew()
-    crew.context = {"plants": plants, "beds": beds}
+    _ = crew.kickoff({"plants": plants, "beds": beds})   # context delivered here
 
-    # Kick off the crew (still placeholder logic)
-    _ = crew.kickoff()
+
 
     # Write a basic markdown report
     report_path = write_markdown(plants, beds)
