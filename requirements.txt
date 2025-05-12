@@ -1,4 +1,4 @@
-crewai==0.118.0
+crewai
 crewai_tools
 streamlit>=1.33
 pillow
