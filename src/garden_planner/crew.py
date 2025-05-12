@@ -1,14 +1,15 @@
 # BEGIN crew.py
-import yaml
-from pathlib import Path
-from typing import Dict, List
-from crewai import Agent, Task, Crew, Process
-from crewai_tools import SerperDevTool
 # --- patch sqlite3 so Chroma works on Streamlit Cloud ---
 import pysqlite3  # noqa: F401
 import sys
 sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 # --------------------------------------------------------
+import yaml
+from pathlib import Path
+from typing import Dict, List
+from crewai import Agent, Task, Crew, Process
+from crewai_tools import SerperDevTool
+
 
 CONFIG_DIR = Path(__file__).resolve().parent.parent.parent / "config"
 
