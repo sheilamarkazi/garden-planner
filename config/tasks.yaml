@@ -2,48 +2,56 @@ ingest_plant_list:
   description: >
     Parse the user's plant names and quantities, then fetch full botanical
     profiles for each. Output JSON key `plants`.
+  expected_output: JSON array stored under key 'plants'
   agent: plant_specialist
 
 analyse_beds:
   description: >
     Normalize the user's bed specifications (dimensions, depth, light, soil,
     septic proximity) into structured objects. Output JSON key `beds`.
+  expected_output: JSON array stored under key 'beds'
   agent: site_analyst
 
 build_compatibility_matrix:
   description: >
     Score every (plant, bed) and (plant, plant) pairing for light, soil, water,
     symbiosis, and deterrent role. Output matrix plus ranked candidates per bed.
+  expected_output: Compatibility matrix and ranked candidates per bed
   agent: compatibility_strategist
 
 draft_allocation:
   description: >
     Allocate plants to beds maximizing compatibility scores and meeting
     quantities. Output provisional map `allocations`.
+  expected_output: JSON map of bed → list of plant allocations
   agent: layout_designer
 
 edge_ring_planning:
   description: >
     Insert deterrent species along bed edges when wildlife risk is medium or
     higher. Update allocations accordingly.
+  expected_output: Updated allocations including deterrent edge plantings
   agent: wildlife_mitigator
 
 constraint_validation:
   description: >
     Validate spacing, zone, depth, toxicity, and invasiveness constraints.
-    Fail and request re‑planning if any rule is broken. Output `warnings`.
+    Fail and request re-planning if any rule is broken. Output `warnings`.
+  expected_output: Either "all clear" or list of warning strings
   agent: compliance_checker
 
 generate_report:
   description: >
-    Produce a markdown brief summarising per‑bed plantings, rationale, and
+    Produce a markdown brief summarising per-bed plantings, rationale, and
     caution notes. Save to output/report.md
+  expected_output: Markdown file at output/report.md
   agent: report_writer
   output_file: output/report.md
 
 render_diagram:
   description: >
-    Render a simple top‑down garden diagram (PNG or SVG) labelled per bed and
+    Render a simple top-down garden diagram (PNG or SVG) labelled per bed and
     plant. Save to output/garden_plan.png.
+  expected_output: Image file at output/garden_plan.png
   agent: visualizer
   output_file: output/garden_plan.png
