@@ -1,0 +1,1 @@
+text\ncrewai\ncrewai_tools\nstreamlit>=1.33\npillow\n
