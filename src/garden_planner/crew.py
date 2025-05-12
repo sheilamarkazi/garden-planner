@@ -44,10 +44,12 @@ def create_crew(verbose: bool = True) -> Crew:
         tasks.append(
             Task(
                 description=tcfg["description"],
+                expected_output=tcfg["expected_output"],   # ← add this line
                 agent=agents[tcfg["agent"]],
                 output_file=tcfg.get("output_file"),
             )
         )
+
 
     crew = Crew(
         agents=list(agents.values()),
