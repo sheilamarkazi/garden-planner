@@ -1,7 +1,6 @@
 from __future__ import annotations
 import re
-from garden_planner.crew import create_crew
-
+from .crew import create_crew
 
 # ---------- parsers ----------
 PLANT_LINE = re.compile(r"^(.*?)[\s\t]+(\d+)$")
