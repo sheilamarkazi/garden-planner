@@ -1,1 +1,4 @@
-text\ncrewai\ncrewai_tools\nstreamlit>=1.33\npillow\n
+crewai
+crewai_tools
+streamlit>=1.33
+pillow
