@@ -3,3 +3,4 @@ crewai_tools
 streamlit>=1.33
 pillow
 pyyaml
+\npysqlite3-binary==0.5.2\n
