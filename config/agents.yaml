@@ -1,4 +1,3 @@
-AGENTS_YAML = textwrap.dedent("""\
 plant_specialist:
   role: Plant Specialist
   goal: Provide botanical profiles and companion‑plant insights.
@@ -55,4 +54,3 @@ visualizer:
   backstory: >
     A graphics guru who loves SVG schematics.
   verbose: true
-""")
