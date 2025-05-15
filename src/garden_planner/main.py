@@ -88,7 +88,7 @@ def draw_diagram(plants: list[dict], beds: list[dict]) -> Path:
         y_cursor += h + PAD  # move down for next bed
 
     out_dir = Path("output")
-    out_dir.mkdir(exist_ok=True, exist_ok=True)
+    out_dir.mkdir(exist_ok=True)
     png_path = out_dir / "garden_plan.png"
     img.save(png_path)
     return png_path
