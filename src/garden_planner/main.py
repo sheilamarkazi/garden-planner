@@ -46,32 +46,53 @@ def parse_beds(raw: str) -> list[dict]:
     return beds
 
 
-# ---------- helper to write markdown ----------
-def write_markdown(plants: list[dict], beds: list[dict]) -> Path:
+# ---------- helper to draw a simple diagram ----------
+from PIL import Image, ImageDraw, ImageFont
+
+def draw_diagram(plants: list[dict], beds: list[dict]) -> Path:
+    """Render a naive top-down diagram: one rectangle per bed."""
+    SCALE = 50  # pixels per foot
+    PAD = 40    # margin around each bed
+
+    # pick a basic font that exists in the Streamlit image
+    try:
+        font = ImageFont.truetype("DejaVuSans.ttf", 14)
+    except IOError:
+        font = ImageFont.load_default()
+
+    # compute canvas size (beds stacked vertically)
+    canvas_w = max(int(b["width_ft"] * SCALE) for b in beds) + PAD * 2
+    canvas_h = sum(int(b["length_ft"] * SCALE) + PAD for b in beds) + PAD
+
+    img = Image.new("RGBA", (canvas_w, canvas_h), "white")
+    draw = ImageDraw.Draw(img)
+
+    y_cursor = PAD
+    for bed in beds:
+        w = int(bed["width_ft"] * SCALE)
+        h = int(bed["length_ft"] * SCALE)
+        x0, y0 = PAD, y_cursor
+        x1, y1 = x0 + w, y0 + h
+
+        # bed rectangle
+        draw.rectangle([x0, y0, x1, y1], outline="black", width=2, fill="#ecf0f1")
+
+        # bed label
+        draw.text((x0 + 6, y0 + 6), bed["id"], font=font, fill="black")
+
+        # simple plant list (all plants for now)
+        plant_lines = [f"{p['name']} × {p['qty']}" for p in plants]
+        text = "\n".join(plant_lines)
+        draw.text((x0 + 6, y0 + 24), text, font=font, fill="green")
+
+        y_cursor += h + PAD  # move down for next bed
+
     out_dir = Path("output")
-    out_dir.mkdir(exist_ok=True)
-    md_path = out_dir / "report.md"
+    out_dir.mkdir(exist_ok=True, exist_ok=True)
+    png_path = out_dir / "garden_plan.png"
+    img.save(png_path)
+    return png_path
 
-    lines = ["# Garden-Planner Report\n"]
-
-    lines.append("## Plants Purchased\n")
-    for p in plants:
-        lines.append(f"* **{p['name']}** × {p['qty']}")
-
-    lines.append("\n## Planting Beds\n")
-    for b in beds:
-        lines.append(
-            f"* **{b['id']}** – {b['width_ft']}×{b['length_ft']} ft, "
-            f"depth {b['depth_in']} in, {b['light']}, {b['soil']}"
-        )
-
-    lines.append(
-        "\n*(Detailed placement and symbiosis notes will appear after the "
-        "allocation algorithm is wired in.)*\n"
-    )
-
-    md_path.write_text("\n".join(lines))
-    return md_path
 
 
 # ---------- Crew runner ----------
