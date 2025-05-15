@@ -94,6 +94,32 @@ def draw_diagram(plants: list[dict], beds: list[dict]) -> Path:
     return png_path
 
 
+# ---------- helper to write markdown ----------
+def write_markdown(plants: list[dict], beds: list[dict]) -> Path:
+    out_dir = Path("output")
+    out_dir.mkdir(exist_ok=True)
+    md_path = out_dir / "report.md"
+
+    lines = ["# Garden-Planner Report\n"]
+
+    lines.append("## Plants Purchased\n")
+    for p in plants:
+        lines.append(f"* **{p['name']}** × {p['qty']}")
+
+    lines.append("\n## Planting Beds\n")
+    for b in beds:
+        lines.append(
+            f"* **{b['id']}** – {b['width_ft']}×{b['length_ft']} ft, "
+            f"depth {b['depth_in']} in, {b['light']}, {b['soil']}"
+        )
+
+    lines.append(
+        "\n*(Detailed placement and symbiosis notes will appear after the "
+        "allocation algorithm is wired in.)*\n"
+    )
+
+    md_path.write_text("\n".join(lines))
+    return md_path
 
 # ---------- Crew runner ----------
 def run_crew(plants_text: str, beds_text: str):
