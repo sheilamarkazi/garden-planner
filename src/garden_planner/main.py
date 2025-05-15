@@ -109,8 +109,8 @@ def run_crew(plants_text: str, beds_text: str):
     report_path = write_markdown(plants, beds)
 
     # Diagram not implemented yet – create an empty placeholder
-    diagram_path = Path("output/garden_plan.png")
-    diagram_path.write_bytes(b"")
+    diagram_path = draw_diagram(plants, beds)
+    
 
     return str(report_path), str(diagram_path)
 
